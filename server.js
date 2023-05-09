@@ -21,7 +21,7 @@ app.get('/reservering', (req, res) => {
 })
 
 app.get('/test', function(req, res) {
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.status(200).json("Request OK")
 });
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
