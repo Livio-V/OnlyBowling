@@ -5,5 +5,15 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  }
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start_main": "nodemon server.js"
+  },
+  "name": "onlybowling",
+  "version": "0.0.1",
+  "description": "Bowling reservation system",
+  "main": "server.js",
+  "author": "Livio, Philip en Jools",
+  "license": "ISC"
 }
