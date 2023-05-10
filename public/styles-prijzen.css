@@ -1,0 +1,145 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+.logo-link {
+  transition: 0.2s;
+}
+.logo-link:hover {
+  filter: blur(2px);
+  transition: 0.4s;
+}
+.bg-cover {
+  background-color: #4e6e81;
+  opacity: 0.6;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.nav-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background-color: #4e6e81;
+  transition: 0.3s;
+  transition-delay: 0.3s;
+}
+.navbar-items {
+  margin-top: 40px;
+  gap: 30px;
+  opacity: 0;
+  text-align: center;
+  transition: 0.3s;
+}
+.nav-bar:hover {
+  width: 400px;
+  transition: width 0.6s cubic-bezier(0.68, 0.55, 0.27, 1.65);
+}
+.nav-bar:hover .navbar-items {
+  opacity: 1;
+  display: block;
+  transition: 2s;
+}
+.titel {
+  font-size: 40px;
+}
+.img {
+  margin-top: 15%;
+  transition: 0.3s;
+}
+.navbar-image {
+  width: 300px;
+  border-radius: 20px;
+}
+.links {
+  margin: 10px;
+}
+.locaties {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+.locatie {
+  margin-top: 5%;
+  text-transform: uppercase;
+}
+.vestiging {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.logo-img {
+  max-width: 300px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.copy {
+  font-size: 12px;
+}
+.content {
+  margin-top: 50px;
+  margin-left: 20px;
+  width: 700px;
+}
+.prijzen {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+.prijzen2 {
+  font-size: 18px;
+}
+.korting {
+  border-top: 2px solid #111;
+  margin-top: 20px;
+}
+.weekend,
+.werkweek,
+.groep {
+  width: 200px;
+  height: 125px;
+  background-color: rgba(78, 110, 129, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  transition: width 0.6s cubic-bezier(0.68, 0.55, 0.27, 1.3);
+}
+.weekend:hover,
+.werkweek:hover,
+.groep:hover {
+  width: 600px;
+  background-color: rgba(78, 110, 129, 1);
+  transition: 0.3s;
+}
+.active1 {
+  opacity: 0;
+  min-width: 600px;
+  transition: 0.1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.weekend:hover .active1,
+.werkweek:hover .active1,
+.groep:hover .active1 {
+  transition: opacity 0.3s ease 0.6s;
+  opacity: 1;
+}

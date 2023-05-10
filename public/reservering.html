@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+    </style>
+    <link rel="stylesheet" href="styles-reservering.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnlyBowling</title>
+  </head>
+  <body>
+    <div>
+      <a class="logo-link" href="/pages/index.html"
+        ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
+      /></a>
+    </div>
+    <div class="bg-cover"></div>
+    <img class="bg" src="/img/bg.jpg" alt="bowlingbaan" />
+    <div class="nav-bar">
+      <div class="navbar-items">
+        <p class="titel">OnlyBowling</p>
+        <a href="/pages/reservering.html" class="links">Reserveren</a>
+        <a href="/pages/prijzen.html" class="links">Prijzen</a>
+        <a href="/pages/contact.html" class="links">Contact</a>
+        <div class="locaties">
+          <p class="locatie vestiging">onze Vestigingen</p>
+          <a href="#" class="locatie">Maastricht</a>
+          <a href="#" class="locatie">Antwerpen</a>
+          <a href="#" class="locatie">Utrecht</a>
+          <a href="#" class="locatie">Brussel</a>
+        </div>
+        <div class="img">
+          <img
+            src="https://i.stack.imgur.com/B6fEt.png"
+            alt="Location Route"
+            class="navbar-image"
+          />
+        </div>
+        <p class="copy">&copy; 2023 OnlyBowling. All Rights Reserved.</p>
+      </div>
+    </div>
+    <div class="reservation-container">
+      <div class="agenda">
+        <div class="agenda-header">
+          <div class="agenda-item time">Time</div>
+          <div class="agenda-item lane">Lane 1</div>
+          <div class="agenda-item lane">Lane 2</div>
+          <div class="agenda-item lane">Lane 3</div>
+          <div class="agenda-item lane">Lane 4</div>
+        </div>
+        <div class="agenda-body">
+          <div class="agenda-item time">09:00 AM</div>
+          <div class="agenda-item lane" data-lane="1" data-time="09:00"></div>
+          <div class="agenda-item lane" data-lane="2" data-time="09:00"></div>
+          <div class="agenda-item lane" data-lane="3" data-time="09:00"></div>
+          <div class="agenda-item lane" data-lane="4" data-time="09:00"></div>
+          <div class="agenda-item time">10:00 AM</div>
+          <div class="agenda-item lane" data-lane="1" data-time="10:00"></div>
+          <div class="agenda-item lane" data-lane="2" data-time="10:00"></div>
+          <div class="agenda-item lane" data-lane="3" data-time="10:00"></div>
+          <div class="agenda-item lane" data-lane="4" data-time="10:00"></div>
+          <!-- Add more time slots here... -->
+        </div>
+      </div>
+      <div class="reservation-container">
+        <div class="agenda">
+          <div class="agenda-header">Monday</div>
+          <div class="agenda-item">9am - 10am</div>
+          <div class="agenda-item">10am - 11am</div>
+          <div class="agenda-item">11am - 12pm</div>
+        </div>
+        <div class="agenda">
+          <div class="agenda-header">Tuesday</div>
+          <div class="agenda-item">9am - 10am</div>
+          <div class="agenda-item">10am - 11am</div>
+          <div class="agenda-item">11am - 12pm</div>
+        </div>
+        <div class="agenda">
+          <div class="agenda-header">Wednesday</div>
+          <div class="agenda-item">9am - 10am</div>
+          <div class="agenda-item">10am - 11am</div>
+          <div class="agenda-item">11am - 12pm</div>
+        </div>
+        <!-- Repeat for remaining days -->
+      </div>
+    </div>
+  </body>
+</html>
