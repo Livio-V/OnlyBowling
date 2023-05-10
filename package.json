@@ -14,6 +14,6 @@
   "version": "0.0.1",
   "description": "Bowling reservation system",
   "main": "server.js",
-  "author": "Livio, Philip en Jools",
+  "author": "Livio, Philip, Szymon en Jools",
   "license": "ISC"
 }
