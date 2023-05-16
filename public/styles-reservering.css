@@ -32,37 +32,59 @@ a {
   text-decoration: none;
   color: #fff;
 }
+
 .nav-bar {
   position: fixed;
   top: 0;
   right: 0;
   width: 50px;
+
   height: 100%;
-  background-color: #4e6e81;
+  /* background-color: #4e6e81a1; */
   transition: 0.3s;
   transition-delay: 0.3s;
 }
 .navbar-items {
-  margin-top: 40px;
+  margin-top: 30px;
   gap: 30px;
   opacity: 0;
   text-align: center;
   transition: 0.3s;
 }
+/* .navbar-bg{
+  background-color: #cccccc48;
+} */
 .nav-bar:hover {
   width: 400px;
-  transition: width 0.6s cubic-bezier(0.68, 0.55, 0.27, 1.65);
+  transition: width 0s;
 }
 .nav-bar:hover .navbar-items {
   opacity: 1;
   display: block;
   transition: 2s;
 }
+
+.nav-bar:hover .arrow {
+  opacity: 0;
+  transition: 0s;
+}
+.arrow {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  border: solid #f8f8f8a1;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 5px;
+  transform: rotate(135deg);
+  transition: 1s;
+}
 .titel {
   font-size: 40px;
 }
 .img {
-  margin-top: 15%;
   transition: 0.3s;
 }
 .navbar-image {
@@ -72,12 +94,18 @@ a {
 .links {
   margin: 10px;
 }
+.links:hover,
+.locatie:hover {
+  text-decoration: line-through;
+  transition: 0.3s;
+}
 .locaties {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
 }
-.locatie {
+.locatie,
+.locatie2 {
   margin-top: 5%;
   text-transform: uppercase;
 }
@@ -100,26 +128,79 @@ a {
 }
 
 /* test */
-.reservation-container {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.agenda {
-  margin: 10px;
+form {
+  width: 400px;
+  background-color: rgba(234, 234, 234, 0.409);
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 200px;
+  border-radius: 30px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+input,
+select,
+label {
+  margin-top: 10px;
+  width: 250px;
+  border-radius: 10px;
+  border: none;
+  height: 25px;
+}
+.submit {
+  margin-bottom: 10px;
+  transition: 0.5s;
+}
+.submit:hover {
+  background-color: #4caf50;
+  transition: 0.3s;
+}
+/* ,..... */
+.progress {
+  background-color: #ccc;
+  height: 20px;
+  width: 320px;
+  margin-bottom: 20px;
+  border-radius: 30px;
 }
 
-.agenda-header {
-  font-weight: bold;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+.progress-bar {
+  background-color: #4caf50;
+  height: 100%;
+  width: 0%;
+  border-radius: 30px;
+  transition: 0.6s;
+}
+.container-reservering {
+  display: flex;
+  justify-content: center;
 }
 
-.agenda-item {
-  margin-bottom: 5px;
+/* #summary {
+  max-width: 200px;
+  height: auto;
+  margin-top: 30px;
+} */
+.admin-container {
+  text-align: right;
+  margin-right: 10px;
+}
+.admin-container a {
+  color: rgba(0, 0, 0, 0.484);
+}
+input {
+  padding-left: 2px;
+}
+.socials {
+  margin-top: 60px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+i {
+  font-size: 20px;
 }

@@ -37,32 +37,53 @@ a {
   top: 0;
   right: 0;
   width: 50px;
+
   height: 100%;
-  background-color: #4e6e81;
+  /* background-color: #4e6e81a1; */
   transition: 0.3s;
   transition-delay: 0.3s;
 }
 .navbar-items {
-  margin-top: 40px;
+  margin-top: 30px;
   gap: 30px;
   opacity: 0;
   text-align: center;
   transition: 0.3s;
 }
+/* .navbar-bg{
+  background-color: #cccccc48;
+} */
 .nav-bar:hover {
   width: 400px;
-  transition: width 0.6s cubic-bezier(0.68, 0.55, 0.27, 1.65);
+  transition: width 0s;
 }
 .nav-bar:hover .navbar-items {
   opacity: 1;
   display: block;
   transition: 2s;
 }
+
+.nav-bar:hover .arrow {
+  opacity: 0;
+  transition: 0s;
+}
+.arrow {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  border: solid #f8f8f8a1;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 5px;
+  transform: rotate(135deg);
+  transition: 1s;
+}
 .titel {
   font-size: 40px;
 }
 .img {
-  margin-top: 15%;
   transition: 0.3s;
 }
 .navbar-image {
@@ -74,10 +95,6 @@ a {
 }
 .links:hover,
 .locatie:hover {
-  color: black;
-}
-.links:hover,
-.locatie:hover {
   text-decoration: line-through;
   transition: 0.3s;
 }
@@ -86,16 +103,18 @@ a {
   display: flex;
   flex-direction: column;
 }
-.locatie {
+.locatie,
+.locatie2 {
   margin-top: 5%;
   text-transform: uppercase;
 }
 .vestiging {
   font-weight: bold;
+  text-decoration: underline;
 }
 .logo-img {
   max-width: 300px;
-  margin-top: 10px;
+
   margin-left: 10px;
 }
 .copy {
@@ -116,4 +135,43 @@ a {
 .welkom2 {
   color: #fff;
   font-size: 16px;
+}
+.admin-container {
+  text-align: right;
+  margin-right: 10px;
+}
+.admin-container a {
+  color: rgba(0, 0, 0, 0.484);
+}
+.socials {
+  margin-top: 60px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+i {
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+  }
+  .bg-cover {
+    background-color: #4e6e81;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    z-index: -1;
+  }
 }

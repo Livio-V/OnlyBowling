@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+    </style>
+    <link rel="stylesheet" href="styles-admin.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnlyBowling</title>
+  </head>
+  <body>
+    <div>
+      <a class="logo-link" href="/pages/index.html"
+        ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
+      /></a>
+    </div>
+    <div class="bg-cover"></div>
+    <img class="bg" src="/img/bg.jpg" alt="bowlingbaan" />
+    </div>
+    <div class="admin-container">
+      <div class="container-tabel">
+        <div class="container-tabel-datum">
+        <p>Vandaag is het &nbsp<p class="container-datum text"></p>.</p>
+      </div>
+        <table class="first-row">
+          <tr>
+            <th>#</th>
+            <th>Naam</th>
+            <th>Aantal</th>
+            <th>Baan</th>
+            <th>Telefoon</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>John Doe</td>
+            <td>15</td>
+            <td>5</td>
+            <td>06123456789</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>John Doe</td>
+            <td>15</td>
+            <td>5</td>
+            <td>06123456789</td>
+          </tr>        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    function formatDate(date) {
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      
+      if (day < 10) {
+        day = '0' + day;
+      }
+      if (month < 10) {
+        month = '0' + month;
+      }
+      
+      return day + '-' + month + '-' + year;
+    }
+
+    function updateCurrentDate() {
+      var currentDate = new Date();
+      var formattedDate = formatDate(currentDate);
+      
+      var adminContainer = document.querySelector('.container-datum');
+      adminContainer.textContent = formattedDate;
+    }
+
+    window.onload = function() {
+      updateCurrentDate();
+    };
+  </script>
+</html>

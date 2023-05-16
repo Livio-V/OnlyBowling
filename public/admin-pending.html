@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+    </style>
+    <link rel="stylesheet" href="styles-admin.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnlyBowling</title>
+  </head>
+  <body>
+    <div>
+      <a class="logo-link" href="/pages/index.html"
+        ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
+      /></a>
+    </div>
+    <div class="bg-cover"></div>
+    <img class="bg" src="/img/bg.jpg" alt="bowlingbaan" />
+
+    <div class="content">
+      <div class="welkom">Admin Panel</div>
+      <div class="welkom2">
+        Log hier in om toegang te krijgen tot het Admin Panel.
+      </div>
+      <div class="login-content">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Wachtwoord invoeren"
+        />
+        <button onclick="checkPasswordAndRedirect()">Login</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    function redirectToAdminPending() {
+      window.location.href = "admin-pending.html";
+    }
+
+    function checkPasswordAndRedirect() {
+      var password = document.getElementById("passwordInput").value;
+
+      // Compare the entered password with the correct password
+      if (password === "Admin") {
+        // Replace 'your_password' with your actual password
+        window.location.href = "admin.html"; // Redirect to the admin page
+      } else {
+        alert("Verkeerd wachtwoord opgegeven, probeer opnieuw."); // Display an error message
+      }
+    }
+  </script>
+</html>
