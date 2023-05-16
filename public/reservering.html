@@ -62,7 +62,7 @@
     </div>
     <div class="container-reservering">
 
-        <form>
+        <form id="reservation-form">
           <label for="name">Naam:</label>
           <input type="text" id="name" name="name" required />
 
@@ -97,7 +97,7 @@
             type="number"
             id="group-size"
             name="group-size"
-            min="1"
+            min="2"
             max="12"
             required
           />
@@ -133,21 +133,20 @@
       });
     });
   </script>
-  <script>
-    const form = document.querySelector("form");
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const groupSize = parseInt(document.getElementById("group-size").value);
-      if (groupSize > 8) {
-        alert(
-          `Uw groep heeft ${groupSize} mensen, daarom ontvangt u allen een gratis consumptie!`
-        );
-      } else {
-        alert(`Uw reservatie is ingediend.`);
-      }
-      form.reset();
-    });
-  </script>
+<script>
+  document.getElementById('reservation-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    var groupSize = parseInt(document.getElementById('group-size').value);
+
+    if (groupSize > 8) {
+      alert('U heeft recht op een gratis consumptie!');
+    } else {
+      alert('Bedankt voor uw reservering!');
+    }
+  });
+</script>
+
   <script>
     var datePicker = document.getElementById("date");
     datePicker.addEventListener("input", function () {

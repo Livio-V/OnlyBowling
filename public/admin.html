@@ -22,33 +22,132 @@
     <div class="admin-container">
       <div class="container-tabel">
         <div class="container-tabel-datum">
-        <p>Vandaag is het &nbsp<p class="container-datum text"></p>.</p>
+        <p>Vandaag is het &nbsp<p class="container-datum text"></p></p>
       </div>
         <table class="first-row">
           <tr>
             <th>#</th>
+            <th>Datum</th>
             <th>Naam</th>
             <th>Aantal</th>
             <th>Baan</th>
+            <th>Tijd</th>
             <th>Telefoon</th>
           </tr>
           <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>15</td>
-            <td>5</td>
-            <td>06123456789</td>
+            <td class="number">1</td>
+            <td class="date">20-05-2023</td>
+            <td class="name">John1 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
           </tr>
           <tr>
-            <td>2</td>
-            <td>John Doe</td>
-            <td>15</td>
-            <td>5</td>
-            <td>06123456789</td>
-          </tr>        </table>
+            <td class="number">1</td>
+            <td class="date">17-05-2023</td>
+            <td class="name">John2 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+          <tr>
+            <td class="number">1</td>
+            <td class="date">16-05-2023</td>
+            <td class="name">John3 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+          <tr>
+            <td class="number">10</td>
+            <td class="date">22-05-2023</td>
+            <td class="name">John4 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+          <tr>
+            <td class="number">1</td>
+            <td class="date">17-05-2023</td>
+            <td class="name">John2 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+          <tr>
+            <td class="number">1</td>
+            <td class="date">16-05-2023</td>
+            <td class="name">John3 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+          <tr>
+            <td class="number">10</td>
+            <td class="date">22-05-2023</td>
+            <td class="name">John4 Doe</td>
+            <td class="people">15</td>
+            <td class="lane">5</td>
+            <td class="time">13:00</td>
+            <td class="phone">06123456789</td>
+          </tr>
+              </table>
       </div>
     </div>
   </body>
+<script>// Get the table element
+
+  var table = document.querySelector('.first-row');
+  
+  // Get all the table rows except the header row
+  var rows = Array.from(table.querySelectorAll('tr')).slice(1);
+  
+  // Sort the rows based on the date
+  rows.sort(function(a, b) {
+    var dateA = new Date(a.querySelector('.date').textContent);
+    var dateB = new Date(b.querySelector('.date').textContent);
+    return dateA - dateB;
+  });
+  
+  // Reorder the rows in the table
+  rows.forEach(function(row) {
+    table.appendChild(row);
+  });
+  </script>  
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var table = document.querySelector(".first-row");
+      var rows = table.querySelectorAll("tr");
+  
+      // Function to update the numbering in the table
+      function updateNumbering() {
+        var currentNumber = 1;
+  
+        rows.forEach(function(row) {
+          var numberCell = row.querySelector(".number");
+          if (numberCell) {
+            var rowNumber = parseInt(numberCell.textContent);
+            if (rowNumber !== currentNumber) {
+              numberCell.textContent = currentNumber;
+            }
+            currentNumber++;
+          }
+        });
+      }
+  
+      // Example usage: Call the updateNumbering function
+      // whenever you want to update the numbering in the table
+      updateNumbering();
+    });
+  </script>
+  
   <script>
     function formatDate(date) {
       var day = date.getDate();
@@ -77,4 +176,5 @@
       updateCurrentDate();
     };
   </script>
+
 </html>

@@ -23,6 +23,22 @@
     <div class="bg-cover"></div>
     <img class="bg" src="/img/bg.jpg" alt="bowlingbaan" />
 
+    <div class="nav-bar-m">
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+      <div class="menu-content">
+        <a href="/pages/reservering.html" class="reserveren-m link-m"
+          >Reserveren</a
+        >
+        <a href="/pages/prijzen.html" class="prijzen-m link-m">Prijzen</a>
+        <p class="menu-subtitle">Onze Vestigingen</p>
+        <a href="#" class="menu-locatie">Maastricht</a>
+        <a href="#" class="menu-locatie">Antwerpen</a>
+        <a href="#" class="menu-locatie">Utrecht</a>
+      </div>
+    </div>
+
     <div class="nav-bar">
       <div class="arrow"></div>
       <div class="navbar-items">
@@ -70,4 +86,18 @@
       </div>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var menuToggle = document.getElementById("menu-toggle");
+      var menuContent = document.querySelector(".menu-content");
+
+      menuToggle.addEventListener("change", function () {
+        if (menuToggle.checked) {
+          menuContent.style.top = "20px";
+        } else {
+          menuContent.style.top = "-800px";
+        }
+      });
+    });
+  </script>
 </html>

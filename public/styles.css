@@ -143,6 +143,9 @@ a {
 .admin-container a {
   color: rgba(0, 0, 0, 0.484);
 }
+.nav-bar-m {
+  display: none;
+}
 .socials {
   margin-top: 60px;
   margin-bottom: 10px;
@@ -153,8 +156,58 @@ a {
 i {
   font-size: 20px;
 }
-
+.nav-bar-m {
+  position: relative;
+}
+#menu-toggle {
+  display: none;
+}
+.menu-icon {
+  color: #f1f1f1;
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 4rem;
+  line-height: 20px;
+  padding: 10px;
+}
+.menu-icon:hover {
+  color: #000000;
+}
+.menu-content {
+  top: -500px;
+  background-color: #4e6e81;
+  position: absolute;
+  min-width: 80%;
+  max-width: 100%;
+  height: 250px;
+  transition: 0.4s;
+}
+.reserveren-m {
+  margin-top: 20px;
+}
+.link-m {
+  font-size: 30px;
+}
+.menu-subtitle,
+.menu-locatie {
+  margin-top: 20px;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.menu-content {
+  text-align: center;
+}
+#menu-toggle:checked + .menu-content {
+  top: 0px;
+}
 @media (max-width: 768px) {
+  .logo-img {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
   .bg {
     position: fixed;
     top: 0;
@@ -164,14 +217,31 @@ i {
     z-index: -2;
     overflow: hidden;
   }
-  .bg-cover {
-    background-color: #4e6e81;
-    opacity: 0.6;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    height: 100%;
-    z-index: -1;
+
+  body {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  .nav-bar {
+    display: none;
+  }
+  .nav-bar-m {
+    display: block;
+  }
+  .content {
+    margin-top: 130px;
+    margin-left: 20px;
+    width: 700px;
+  }
+  .welkom {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 55px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .welkom2 {
+    color: #fff;
+    font-size: 22px;
   }
 }
