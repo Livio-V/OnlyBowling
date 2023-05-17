@@ -87,14 +87,14 @@ app.post('/reservering/aanmaken', function(req,res){
   var fullname = data.fullname;
   var email = data.email;
   var phone = data.phone;
-  var people = data.people
+  var people = data.people;
   var date_time_reservation = data.date_time_reservation; 
 
-  sql2 = 
+  var sql2 = "";
+  var sqlParams2 = "";
   
-  con.query(sql, sqlParams, function (err, result){
+  con.query(sql2, sqlParams2, function (err, result){
     if (err) throw err;
-
   })
 
   var sqlParams = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
