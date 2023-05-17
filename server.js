@@ -82,7 +82,6 @@ app.post('/reservering/aanmaken', function(req,res){
   const currentDate = new Date();
   // Get the full date as a string
   var date_added = currentDate.toLocaleDateString();
-  console.log(date_added); // Output: 5/17/2023 (or a similar date format depending on your locale)
   
   var data = req.body
   var fullname = data.fullname;
@@ -90,6 +89,13 @@ app.post('/reservering/aanmaken', function(req,res){
   var phone = data.phone;
   var people = data.people
   var date_time_reservation = data.date_time_reservation; 
+
+  sql2 = 
+  
+  con.query(sql, sqlParams, function (err, result){
+    if (err) throw err;
+
+  })
 
   var sqlParams = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
   var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
