@@ -75,14 +75,14 @@ app.get('/reservering/status', (req, res) => {
   });
 
 
-  // Reservation creation route
-app.post('/reservering/aanmaken', function(req,res){
+ app.post('/reservering/aanmaken', function(req,res){
 
   // Create a new Date object
   const currentDate = new Date();
   // Get the full date as a string
   var date_added = currentDate.toLocaleDateString();
   
+  // Get the variables from the body
   var data = req.body
   var fullname = data.fullname;
   var email = data.email;
@@ -90,23 +90,59 @@ app.post('/reservering/aanmaken', function(req,res){
   var people = data.people;
   var date_time_reservation = data.date_time_reservation; 
 
-  var sql2 = "";
-  var sqlParams2 = "";
-  
+  let slot; 
+  if(date_time_reservation == 14){
+    slot = "slot-1"
+  }
+  else if(date_time_reservation == 15){
+    slot = "slot-2"
+  }
+  else if(date_time_reservation == 16){
+    slot = "slot-3"
+  }
+  else if(date_time_reservation == 17){
+    slot = "slot-4"
+  }
+  else if(date_time_reservation == 18){
+    slot = "slot-5"
+  }
+  else if(date_time_reservation == 20){
+    slot = "slot-6"
+  }
+  else if(date_time_reservation == 21){
+    slot = "slot-7"
+  }
+  else if(date_time_reservation == 22){
+    slot = "slot-8"
+  }
+  else{ res.sendStatus(404)}
+
+  console.log(slot)
+
+  // Check wich lanes are avaliable with selected time slot
+  var sql2 = "SELECT * FROM `lanes` WHERE ? = 'open';";
+  var sqlParams2 = [ slot ];
+
+  // Make the SQL Query to the database
   con.query(sql2, sqlParams2, function (err, result){
     if (err) throw err;
-  })
+    console.log(result)
+  });
 
+  
+
+  // Define the SQL params
   var sqlParams = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
   var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
   
 
-  res.sendStatus(200);
+ /* res.sendStatus(200);
     
-       /* con.query(sql, sqlParams, function (err, result) {
+    con.query(sql, sqlParams, function (err, result) {
           if (err) throw err;
           res.status(200).json(`Gelukt! Je reserving staat op ${date}, om ${slot}`)
-        }); */
+        }); 
+        */
 }); 
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
