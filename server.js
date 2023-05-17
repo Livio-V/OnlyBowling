@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
 const port = 8383
-const rand = require('random-key')
 const bodyParser = require('body-parser');
+
 const mysql = require('mysql')
 
 app.use(express.static('public'))
@@ -11,6 +11,7 @@ app.use(function (req, res, next) {
   res.setHeader('X-Powered-By', 'Livio Media')
   next()
 })
+app.use(bodyParser.json());
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -77,30 +78,18 @@ app.get('/reservering/status', (req, res) => {
   // Reservation creation route
 app.post('/reservering/aanmaken', function(req,res) {
    
-  var sqlParams = ""
-  var sql = `INSERT INTO 'reservations'( 'fullname', 'slot', 'people', 'lane', 'tel', 'mail', 'date') VALUES ('${fullname}','${slot}','${people}','${lane}', '${tel}', '${mail}', '${date}')`
 
-    con.connect(function(err) {
-        if (err) throw err;
-        con.query(sql, function (err, result) {
+  // var sqlParams = [ fullname, email, phone, slot, date_time_reservation, date_added ]
+  var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
+
+  console.log(req.body)
+
+  res.sendStatus(200);
+    
+       /* con.query(sql, sqlParams, function (err, result) {
           if (err) throw err;
           res.status(200).json(`Gelukt! Je reserving staat op ${date}, om ${slot}`)
-        });
-      });
+        }); */
 }); 
-
-
-app.post('/login', function(req,res){
-  var sql = "SELECT id, username, password FROM users WHERE username = ?"
-  var sqlParams = [ username ]
-
-  con.query(sql, sqlParams, function (err, result){
-    if (err) throw err;
-    res.status(201).json()
-  })
-
-
-
-});
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
