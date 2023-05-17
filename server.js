@@ -11,7 +11,7 @@ app.use(function (req, res, next) {
   res.setHeader('X-Powered-By', 'Livio Media')
   next()
 })
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -76,13 +76,24 @@ app.get('/reservering/status', (req, res) => {
 
 
   // Reservation creation route
-app.post('/reservering/aanmaken', function(req,res) {
-   
+app.post('/reservering/aanmaken', function(req,res){
 
-  // var sqlParams = [ fullname, email, phone, slot, date_time_reservation, date_added ]
-  var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
+  // Create a new Date object
+  const currentDate = new Date();
+  // Get the full date as a string
+  var date_added = currentDate.toLocaleDateString();
+  console.log(date_added); // Output: 5/17/2023 (or a similar date format depending on your locale)
+  
+  var data = req.body
+  var fullname = data.fullname;
+  var email = data.email;
+  var phone = data.phone;
+  var people = data.people
+  var date_time_reservation = data.date_time_reservation; 
 
-  console.log(req.body)
+  var sqlParams = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
+  var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
+  
 
   res.sendStatus(200);
     
