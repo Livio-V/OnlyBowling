@@ -12,7 +12,7 @@
   </head>
   <body>
     <div>
-      <a class="logo-link" href="/pages/index.html"
+      <a class="logo-link" href="index.html"
         ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
       /></a>
     </div>
@@ -24,8 +24,15 @@
         <div class="container-tabel-datum">
         <p>Vandaag is het &nbsp<p class="container-datum text"></p></p>
       </div>
-        <table class="first-row">
+        <table id="res-table" class="first-row">
           <tr>
+
+            <select id="sort-select" onchange="sortTable()">
+              <option value="default">Sorteer op:</option>
+              <option value="date-first">Datum (Laag naar Hoog)</option>
+             <option value="date-high">Datum (Hoog naar Laag)</option>
+             <option value="people">Groepsgrootte</option>
+            </select>
             <th>#</th>
             <th>Datum</th>
             <th>Naam</th>
@@ -34,8 +41,8 @@
             <th>Tijd</th>
             <th>Telefoon</th>
           </tr>
-          <tr>
-            <td class="number">1</td>
+          <tr id="res-1">
+            <td class="number">899</td>
             <td class="date">20-05-2023</td>
             <td class="name">John1 Doe</td>
             <td class="people">15</td>
@@ -43,7 +50,7 @@
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
+          <tr id="res-2">
             <td class="number">1</td>
             <td class="date">17-05-2023</td>
             <td class="name">John2 Doe</td>
@@ -52,8 +59,8 @@
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
-            <td class="number">1</td>
+          <tr id="res-3">
+            <td class="number">29</td>
             <td class="date">16-05-2023</td>
             <td class="name">John3 Doe</td>
             <td class="people">15</td>
@@ -61,7 +68,7 @@
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
+          <tr id="res-4">
             <td class="number">10</td>
             <td class="date">22-05-2023</td>
             <td class="name">John4 Doe</td>
@@ -70,7 +77,7 @@
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
+          <tr id="res-5">
             <td class="number">1</td>
             <td class="date">17-05-2023</td>
             <td class="name">John2 Doe</td>
@@ -79,20 +86,20 @@
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
+          <tr id="res-6">
             <td class="number">1</td>
             <td class="date">16-05-2023</td>
             <td class="name">John3 Doe</td>
-            <td class="people">15</td>
+            <td class="people">155</td>
             <td class="lane">5</td>
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
           </tr>
-          <tr>
+          <tr id="res-7">
             <td class="number">10</td>
             <td class="date">22-05-2023</td>
             <td class="name">John4 Doe</td>
-            <td class="people">15</td>
+            <td class="people">13</td>
             <td class="lane">5</td>
             <td class="time">13:00</td>
             <td class="phone">06123456789</td>
@@ -100,27 +107,65 @@
               </table>
       </div>
     </div>
-  </body>
-<script>// Get the table element
+  </body> 
+  <script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("res-table");
+  switching = true;
 
-  var table = document.querySelector('.first-row');
-  
-  // Get all the table rows except the header row
-  var rows = Array.from(table.querySelectorAll('tr')).slice(1);
-  
-  // Sort the rows based on the date
-  rows.sort(function(a, b) {
-    var dateA = new Date(a.querySelector('.date').textContent);
-    var dateB = new Date(b.querySelector('.date').textContent);
-    return dateA - dateB;
-  });
-  
-  // Reorder the rows in the table
-  rows.forEach(function(row) {
-    table.appendChild(row);
-  });
-  </script>  
-  
+  var sortBy = document.getElementById("sort-select").value;
+
+  while (switching) {
+    switching = false;
+    rows = Array.from(table.getElementsByTagName("tr"));
+
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+
+      x = rows[i].getElementsByTagName("td")[getIndex(sortBy)];
+      y = rows[i + 1].getElementsByTagName("td")[getIndex(sortBy)];
+
+      if (sortBy === "date-first") {
+        if (convertDate(x.innerHTML) > convertDate(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (sortBy === "date-high") {
+        if (convertDate(x.innerHTML) < convertDate(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (sortBy === "people") {
+        if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
+function convertDate(dateString) {
+  var dateParts = dateString.split("-");
+  return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+}
+
+function getIndex(sortBy) {
+  if (sortBy === "date-first" || sortBy === "date-high") {
+    return 1;
+  } else if (sortBy === "people") {
+    return 3;
+  }
+}
+
+</script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       var table = document.querySelector(".first-row");

@@ -90,3 +90,9 @@ td {
   padding: 10px;
   border-bottom: 1px solid black;
 }
+.sortable {
+  cursor: pointer;
+}
+#sort-select {
+  margin-left: 10px;
+}

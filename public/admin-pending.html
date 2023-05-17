@@ -12,7 +12,7 @@
   </head>
   <body>
     <div>
-      <a class="logo-link" href="/pages/index.html"
+      <a class="logo-link" href="index.html"
         ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
       /></a>
     </div>
@@ -29,14 +29,17 @@
           type="password"
           id="passwordInput"
           placeholder="Wachtwoord invoeren"
+          onkeydown="handleEnter(event)"
         />
         <button onclick="checkPasswordAndRedirect()">Login</button>
       </div>
     </div>
   </body>
   <script>
-    function redirectToAdminPending() {
-      window.location.href = "admin-pending.html";
+    function handleEnter(event) {
+      if (event.keyCode === 13) {
+        checkPasswordAndRedirect();
+      }
     }
 
     function checkPasswordAndRedirect() {
