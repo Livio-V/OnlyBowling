@@ -92,57 +92,52 @@ app.get('/reservering/status', (req, res) => {
 
   let slot; 
   if(date_time_reservation == 14){
-    slot = "slot-1"
+    slot = "`slot-1`"
   }
   else if(date_time_reservation == 15){
-    slot = "slot-2"
+    slot = "`slot-2`"
   }
   else if(date_time_reservation == 16){
-    slot = "slot-3"
+    slot = "`slot-3`"
   }
   else if(date_time_reservation == 17){
-    slot = "slot-4"
+    slot = "`slot-4`"
   }
   else if(date_time_reservation == 18){
-    slot = "slot-5"
+    slot = "`slot-5`"
   }
   else if(date_time_reservation == 20){
-    slot = "slot-6"
+    slot = "`slot-6`"
   }
   else if(date_time_reservation == 21){
-    slot = "slot-7"
+    slot = "`slot-7`"
   }
   else if(date_time_reservation == 22){
-    slot = "slot-8"
+    slot = "`slot-8`"
   }
-  else{ res.sendStatus(404)}
-
-  console.log(slot)
+  else {}
 
   // Check wich lanes are avaliable with selected time slot
-  var sql2 = "SELECT * FROM `lanes` WHERE ? = 'open';";
-  var sqlParams2 = [ slot ];
-
+  var sql = "SELECT * FROM lane1 WHERE "+ slot+ " = 'open';"
+  
   // Make the SQL Query to the database
-  con.query(sql2, sqlParams2, function (err, result){
+  con.query(sql, function (err, result){
     if (err) throw err;
     console.log(result)
+    res.sendStatus(200)
   });
 
-  
-
   // Define the SQL params
-  var sqlParams = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
-  var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
-  
-
- /* res.sendStatus(200);
+ // var sqlParams1 = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
+ // var sql1 = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
     
-    con.query(sql, sqlParams, function (err, result) {
+   /* con.query(sql, sqlParams, function (err, result) {
           if (err) throw err;
           res.status(200).json(`Gelukt! Je reserving staat op ${date}, om ${slot}`)
         }); 
         */
+
+ // res.status(200).send
 }); 
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
