@@ -90,46 +90,58 @@ app.get('/reservering/status', (req, res) => {
   var people = data.people;
   var date_time_reservation = data.date_time_reservation; 
 
+  let parts = date_time_reservation.split(' ');
+
+  let time = parts[0];
+  let time_reservation = parseInt(time.split(':')[0]);
+
+  let date = parts[1];
+  let dateParts = date.split('-');
+  let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+  console.log(time);          // Time
+  console.log(time_reservation);          // Hour
+  console.log(formattedDate); // YYYY-MM-DD
+
   let slot; 
-  if(date_time_reservation == 14){
-    slot = "`slot-1`"
+  if(time_reservation == 14){
+    slot = "`slot1`"
   }
-  else if(date_time_reservation == 15){
-    slot = "`slot-2`"
+  else if(time_reservation == 15){
+    slot = "`slot2`"
   }
-  else if(date_time_reservation == 16){
-    slot = "`slot-3`"
+  else if(time_reservation == 16){
+    slot = "`slot3`"
   }
-  else if(date_time_reservation == 17){
-    slot = "`slot-4`"
+  else if(time_reservation == 17){
+    slot = "`slot4`"
   }
-  else if(date_time_reservation == 18){
-    slot = "`slot-5`"
+  else if(time_reservation == 18){
+    slot = "`slot5`"
   }
-  else if(date_time_reservation == 20){
-    slot = "`slot-6`"
+  else if(time_reservation == 20){
+    slot = "`slot6`"
   }
-  else if(date_time_reservation == 21){
-    slot = "`slot-7`"
+  else if(time_reservation == 21){
+    slot = "`slot7`"
   }
-  else if(date_time_reservation == 22){
-    slot = "`slot-8`"
+  else if(time_reservation == 22){
+    slot = "`slot8`"
   }
   else {}
 
   // Check wich lanes are avaliable with selected time slot
-  var sql = "SELECT * FROM lane1 WHERE "+ slot+ " = 'open';"
+  var sql = "SELECT * FROM lane1 WHERE "+ slot+ "= 'open' AND `date` = "+ formattedDate
   
   // Make the SQL Query to the database
   con.query(sql, function (err, result){
     if (err) throw err;
     console.log(result)
-    res.sendStatus(200)
   });
 
   // Define the SQL params
- // var sqlParams1 = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
- // var sql1 = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
+ var sqlParams1 = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
+ var sql1 = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
     
    /* con.query(sql, sqlParams, function (err, result) {
           if (err) throw err;
@@ -137,7 +149,7 @@ app.get('/reservering/status', (req, res) => {
         }); 
         */
 
- // res.status(200).send
+   res.sendStatus(200)
 }); 
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
