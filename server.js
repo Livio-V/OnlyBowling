@@ -28,52 +28,14 @@ var con = mysql.createConnection({
 
 app.get('/reservering/status', (req, res) => {
 
-  var currentTime = new Date().getHours(); 
-  let slot; 
-  if (currentTime == 14){
-    slot = 2
-  }
-  else if (currentTime == 15){
-    slot = 3
-  }
-  else if (currentTime == 16){
-    slot = 4
-  }
-  else if (currentTime == 17){
-    slot = 5
-  }
-  else if (currentTime == 17){
-    slot = 6
-  }
-  else if (currentTime == 18){
-    slot = 7
-  }
-  else if (currentTime == 19){
-    slot = 8
-  }
-  else{
-    slot = 1
-  }
-  
+  var sql = "SELECT * FROM reservations WHERE date_reservation >= CURDATE();";
 
-  console.log(`Time Slot: ${slot}`);
-  console.log(`The Current time: ${currentTime}:00`)
-
-  sqlParams = [ slot ]
-  var sql = "SELECT * FROM `reservations` WHERE `slot` = ?;"
-  
-    con.query(sql, sqlParams, function (err, result) {
-      if (err) throw err;
-      
-      if (result[0] == undefined){
-        result = `Geen reservaties voor tijd slot: ${slot}` 
-      }
-
-      res.status(200).json(result)
-      console.log("Request OK")
-    });
+  con.query(sql, (err, result) => {
+    if (err) throw err
+    res.status(200).json(result)
   });
 
+});
 
  app.post('/reservering/aanmaken', function(req,res){
 
@@ -132,38 +94,50 @@ app.get('/reservering/status', (req, res) => {
 
 console.log(`Time slot reservation: ${slot}`)
 
-    // Query the current lane
-    var sql = "SELECT ?? FROM ?? WHERE ?? = 'open' AND DATE(date) = ?;";
-    var lane = "lane1"
-    var sqlParams = [slot, lane, slot, formattedDate];
+  // Define the lane numbers
+  const lanes = ["lane1", "lane2", "lane3", "lane4", "lane5", "lane6", "lane7", "lane8"];
+  let open_lane;
 
-    con.query(sql, sqlParams, function (err, result){
+  // Function to check the availability of each lane
+  const checkLaneAvailability = (laneIndex) => {
+    if (laneIndex >= lanes.length) {
+      // No open lanes found
+      return;
+    }
+
+    const lane = lanes[laneIndex];
+    const sql = `SELECT ${slot} FROM ${lane} WHERE ${slot} = '' AND DATE(date) = ? LIMIT 1;`;
+    const sqlParams = [formattedDate];
+
+    con.query(sql, sqlParams, (err, results) => {
       if (err) throw err;
-      
-      // Assuming the query results are stored in the variable 'results'
-     const slotStatus = result[0].slot1;
-     console.log('Slot status:', slotStatus);
 
+      if (results.length > 0) {
+        // Found an open slot in this lane
+        const laneNumber = lane.replace("lane", "");
+        console.log(`Lane ${laneNumber} has an open slot at the selected date and time.`);
+        open_lane = "lane"+ laneNumber;
 
+        var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `slot`, `lane`, `date_reservation`) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        var sqlParams = [ fullname, email, phone, people, slot, open_lane, formattedDate ]
 
-
-
-
-    });
-
-   
-
-  // Define the SQL params
- var sqlParams1 = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
- var sql1 = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
-    
-   /* con.query(sql, sqlParams, function (err, result) {
+        con.query(sql, sqlParams, (err, results) => {
           if (err) throw err;
-          res.status(200).json(`Gelukt! Je reserving staat op ${date}, om ${slot}`)
-        }); 
-        */
+        })
 
-   res.sendStatus(200)
+        res.sendStatus(200).json( `Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`)
+      }
+
+        else {
+        // Slot not available in this lane, check the next one
+        checkLaneAvailability(laneIndex + 1);
+        }
+    });
+  };
+
+  // Start checking the availability from the first lane
+  checkLaneAvailability(0);
+
 }); 
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
