@@ -113,3 +113,11 @@ input {
 i {
   font-size: 20px;
 }
+
+.success {
+  background-color: #4caf50;
+  border-radius: 5px;
+  padding: 2%;
+  color: white;
+  display: none;
+}
