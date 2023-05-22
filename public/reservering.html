@@ -19,11 +19,11 @@
   <body>
     <div>
       <a class="logo-link" href="index.html"
-        ><img class="logo-img" src="/img/logo-2.png" alt="OnlyBowling Logo"
+        ><img class="logo-img" src="img/logo-2.png" alt="OnlyBowling Logo"
       /></a>
     </div>
     <div class="bg-cover"></div>
-    <img class="bg" src="/img/bg.jpg" alt="bowlingbaan" />
+    <img class="bg" src="img/bg.jpg" alt="bowlingbaan" />
     <div class="nav-bar">
       <div class="arrow"></div>
       <div class="navbar-items">
@@ -67,7 +67,7 @@
 
         <form id="reservation-form">
           <label for="name">Naam:</label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="fullname" name="fullname" required />
 
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" required />
@@ -76,30 +76,26 @@
           <input type="tel" id="phone" name="phone" required />
 
           <label for="date">Datum:</label>
-          <input type="date" id="date" name="date" required />
+          <input type="date" id="date_reservation" name="date_reservation" required />
 
           <label for="time">Tijd:</label>
-          <select id="time" name="time" required>
+          <select id="time_reservation" name="time_reservation" required>
             <option value="">Selecteer uw tijd</option>
-            <option value="14:00">14:00</option>
-            <option value="15:00">15:00</option>
-            <option value="16:00">16:00</option>
-            <option value="17:00">17:00</option>
-            <option value="18:00">18:00</option>
-            <option value="19:00">19:00</option>
-            <option value="20:00">20:00</option>
-            <option value="21:00">21:00</option>
-            <option value="22:00">22:00</option>
-            <option value="23:00">23:00</option>
-            <option value="00:00">00:00</option>
-            <option value="01:00">01:00</option>
-            <option value="02:00">02:00</option>
+            <option value="14">14:00</option>
+            <option value="15">15:00</option>
+            <option value="16">16:00</option>
+            <option value="17">17:00</option>
+            <option value="18">18:00</option>
+            <option value="19">19:00</option>
+            <option value="20">20:00</option>
+            <option value="21">21:00</option>
+            <option value="22">22:00</option>
           </select>
           <label for="group-size">Aantal mensen:</label>
           <input
             type="number"
-            id="group-size"
-            name="group-size"
+            id="people"
+            name="people"
             min="2"
             max="12"
             required
@@ -113,44 +109,6 @@
     </div>
   </body>
   <script>
-    const progressBar = document.querySelector(".progress-bar");
-    const form1 = document.querySelector("form");
-    const inputs = form1.querySelectorAll("input");
-
-    function updateProgress() {
-      const completedInputs = Array.from(inputs).filter(
-        (input) => input.value !== ""
-      );
-      const percentageComplete = (completedInputs.length / inputs.length) * 100;
-      progressBar.style.width = `${percentageComplete}%`;
-    }
-
-    inputs.forEach((input) => {
-      input.addEventListener("input", updateProgress);
-    });
-
-    form1.addEventListener("submit", () => {
-      progressBar.style.width = "0";
-      inputs.forEach((input) => {
-        input.value = "";
-      });
-    });
-  </script>
-<script>
-  document.getElementById('reservation-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting
-
-    var groupSize = parseInt(document.getElementById('group-size').value);
-
-    if (groupSize > 8) {
-      alert('U heeft recht op een gratis consumptie!');
-    } else {
-      alert('Bedankt voor uw reservering!');
-    }
-  });
-</script>
-
-  <script>
     var datePicker = document.getElementById("date");
     datePicker.addEventListener("input", function () {
       var day = new Date(this.value).getUTCDay();
@@ -163,37 +121,5 @@
       }
     });
   </script>
-  <script>
-    const url = 'localhost:8383/reservering/aanmaken';  // Replace with the actual endpoint URL
-
-const data = new URLSearchParams();
-data.append('fullname', 'John Doe');
-data.append('email', 'johndoe@example.com');
-data.append('phone', '1234567890');
-data.append('date_time_reservation', '2023-05-22 10:00');
-data.append('people', 2);
-
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  body: data
-})
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Error: ' + response.status);
-    }
-  })
-  .then(responseData => {
-    console.log('Reservation created:', responseData);
-    // Handle the response data as needed
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle the error appropriately
-  }); 
-  </script>
+  <script src="reservering.js"></script>
 </html>
