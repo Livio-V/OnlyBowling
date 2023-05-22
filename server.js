@@ -38,31 +38,15 @@ app.get('/reservering/status', (req, res) => {
 });
 
 app.post('/reservering/aanmaken', function(req, res) {
-  // Create a new Date object
-  const currentDate = new Date();
-  // Get the full date as a string
-  var date_added = currentDate.toLocaleDateString();
-
   // Get the variables from the body
   var data = req.body;
   var fullname = data.fullname;
   var email = data.email;
   var phone = data.phone;
   var people = data.people;
-  var date_time_reservation = data.date_time_reservation;
-
-  let parts = date_time_reservation.split(' ');
-
-  let time = parts[0];
-  let time_reservation = parseInt(time.split(':')[0]);
-
-  let date = parts[1];
-  let dateParts = date.split('-');
-  let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-
-  console.log(`Time Reservation: ${time}`); // Time
-  console.log(`Hour Reservation: ${time_reservation}`); // Hour
-  console.log(`Date Reservation: ${formattedDate}`); // YYYY-MM-DD
+  var time_reservation = data.time_reservation
+  var date_reservation = data.date_reservation
+  console.log(req.body)
 
   let slot;
   if (time_reservation == 14) {
@@ -101,7 +85,7 @@ app.post('/reservering/aanmaken', function(req, res) {
 
     const lane = lanes[laneIndex];
     const sql = `SELECT ${slot} FROM ${lane} WHERE ${slot} = '' AND DATE(date) = ? LIMIT 1;`;
-    const sqlParams = [formattedDate];
+    const sqlParams = [date_reservation];
 
     con.query(sql, sqlParams, (err, results) => {
       if (err) throw err;
@@ -110,15 +94,23 @@ app.post('/reservering/aanmaken', function(req, res) {
         // Found an open slot in this lane
         const laneNumber = lane.replace("lane", "");
         console.log(`Lane ${laneNumber} has an open slot at the selected date and time.`);
-        open_lane = "lane" + laneNumber;
+        open_lane = laneNumber;
+        lane_full = "lane"+ laneNumber;
 
         var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `slot`, `lane`, `date_reservation`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        var sqlParams = [fullname, email, phone, people, slot, open_lane, formattedDate];
+        var sqlParams = [fullname, email, phone, people, slot, open_lane, date_reservation];
 
         con.query(sql, sqlParams, (err, results) => {
           if (err) throw err;
-          res.status(200).json(`Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`);
+          res.status(200).json(`Gelukt! De reservering staat om: ${time_reservation}. op ${date_reservation}.`);
           return;
+        });
+
+
+        var sql2 = "UPDATE ?? SET ?? = ? WHERE date = ?;"
+        var sqlParams2 = [ lane_full, slot, fullname, date_reservation ]
+        con.query(sql2, sqlParams2, (err) => {
+          if (err) throw err;
         });
 
       } else {
