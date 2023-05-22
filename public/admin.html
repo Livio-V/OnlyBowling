@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <style>
+      .past-reservation .date {
+        color: red;}
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
     </style>
     <link rel="stylesheet" href="styles-admin.css" />
@@ -22,8 +24,8 @@
     <div class="admin-container">
       <div class="container-tabel">
         <div class="container-tabel-datum">
-        <p>Vandaag is het &nbsp<p class="container-datum text"></p></p>
-      </div>
+
+        </div>
         <table id="res-table" class="first-row">
           <tr>
 
@@ -32,7 +34,8 @@
               <option value="date-first">Datum (Laag naar Hoog)</option>
              <option value="date-high">Datum (Hoog naar Laag)</option>
              <option value="people">Groepsgrootte</option>
-            </select>
+
+            </select><button onclick="openReservationForm()">Reservatie toevoegen</button>
             <th>#</th>
             <th>Datum</th>
             <th>Naam</th>
@@ -40,186 +43,48 @@
             <th>Baan</th>
             <th>Tijd</th>
             <th>Telefoon</th>
+            <th>Actie</th>
           </tr>
-          <tr id="res-1">
-            <td class="number">899</td>
-            <td class="date">20-05-2023</td>
-            <td class="name">John1 Doe</td>
-            <td class="people">15</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-2">
-            <td class="number">1</td>
-            <td class="date">17-05-2023</td>
-            <td class="name">John2 Doe</td>
-            <td class="people">15</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-3">
-            <td class="number">29</td>
-            <td class="date">16-05-2023</td>
-            <td class="name">John3 Doe</td>
-            <td class="people">15</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-4">
-            <td class="number">10</td>
-            <td class="date">22-05-2023</td>
-            <td class="name">John4 Doe</td>
-            <td class="people">15</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-5">
-            <td class="number">1</td>
-            <td class="date">17-05-2023</td>
-            <td class="name">John2 Doe</td>
-            <td class="people">15</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-6">
-            <td class="number">1</td>
-            <td class="date">16-05-2023</td>
-            <td class="name">John3 Doe</td>
-            <td class="people">155</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
-          <tr id="res-7">
-            <td class="number">10</td>
-            <td class="date">22-05-2023</td>
-            <td class="name">John4 Doe</td>
-            <td class="people">13</td>
-            <td class="lane">5</td>
-            <td class="time">13:00</td>
-            <td class="phone">06123456789</td>
-          </tr>
+          
               </table>
+             
+              
+      </div>
+    </div>
+    <div id="reservation-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReservationForm()">&times;</span>
+        <form id="reservation-form" onsubmit="addReservation(event)">
+          <label for="date">Datum:</label>
+          <input type="date" id="date" required />
+          <label for="name">Naam:</label>
+          <input type="text" id="name" required />
+          <label for="people">Aantal personen (2-12):</label>
+          <input type="number" id="people" min="2" max="12" required />
+          <label for="lane">Baan (1-8):</label>
+          <input type="number" id="lane" min="1" max="8" required />
+          <label for="time">Tijd (14.00-22.00):</label>
+          <select type="time" id="time" name="time" required>
+            <option value="">Selecteer uw tijd</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00">18:00</option>
+            <option value="19:00">19:00</option>
+            <option value="20:00">20:00</option>
+            <option value="21:00">21:00</option>
+            <option value="22:00">22:00</option>
+
+          </select>
+          <label for="phone">Telefoonnummer:</label>
+          <input type="tel" id="phone" pattern="[0-9]{10}" required />
+          <button type="submit">Reservatie toevoegen</button>
+        </form>
       </div>
     </div>
   </body> 
-  <script>
-function sortTable() {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("res-table");
-  switching = true;
+  <script src="admin.js"></script>
 
-  var sortBy = document.getElementById("sort-select").value;
-
-  while (switching) {
-    switching = false;
-    rows = Array.from(table.getElementsByTagName("tr"));
-
-    for (i = 1; i < (rows.length - 1); i++) {
-      shouldSwitch = false;
-
-      x = rows[i].getElementsByTagName("td")[getIndex(sortBy)];
-      y = rows[i + 1].getElementsByTagName("td")[getIndex(sortBy)];
-
-      if (sortBy === "date-first") {
-        if (convertDate(x.innerHTML) > convertDate(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (sortBy === "date-high") {
-        if (convertDate(x.innerHTML) < convertDate(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (sortBy === "people") {
-        if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
-}
-
-function convertDate(dateString) {
-  var dateParts = dateString.split("-");
-  return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
-}
-
-function getIndex(sortBy) {
-  if (sortBy === "date-first" || sortBy === "date-high") {
-    return 1;
-  } else if (sortBy === "people") {
-    return 3;
-  }
-}
-
-</script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var table = document.querySelector(".first-row");
-      var rows = table.querySelectorAll("tr");
-  
-      // Function to update the numbering in the table
-      function updateNumbering() {
-        var currentNumber = 1;
-  
-        rows.forEach(function(row) {
-          var numberCell = row.querySelector(".number");
-          if (numberCell) {
-            var rowNumber = parseInt(numberCell.textContent);
-            if (rowNumber !== currentNumber) {
-              numberCell.textContent = currentNumber;
-            }
-            currentNumber++;
-          }
-        });
-      }
-  
-      // Example usage: Call the updateNumbering function
-      // whenever you want to update the numbering in the table
-      updateNumbering();
-    });
-  </script>
-  
-  <script>
-    function formatDate(date) {
-      var day = date.getDate();
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-      
-      if (day < 10) {
-        day = '0' + day;
-      }
-      if (month < 10) {
-        month = '0' + month;
-      }
-      
-      return day + '-' + month + '-' + year;
-    }
-
-    function updateCurrentDate() {
-      var currentDate = new Date();
-      var formattedDate = formatDate(currentDate);
-      
-      var adminContainer = document.querySelector('.container-datum');
-      adminContainer.textContent = formattedDate;
-    }
-
-    window.onload = function() {
-      updateCurrentDate();
-    };
-  </script>
 
 </html>
