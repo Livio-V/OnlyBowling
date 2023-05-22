@@ -37,20 +37,19 @@ app.get('/reservering/status', (req, res) => {
 
 });
 
- app.post('/reservering/aanmaken', function(req,res){
-
+app.post('/reservering/aanmaken', function(req, res) {
   // Create a new Date object
   const currentDate = new Date();
   // Get the full date as a string
   var date_added = currentDate.toLocaleDateString();
-  
+
   // Get the variables from the body
-  var data = req.body
+  var data = req.body;
   var fullname = data.fullname;
   var email = data.email;
   var phone = data.phone;
   var people = data.people;
-  var date_time_reservation = data.date_time_reservation; 
+  var date_time_reservation = data.date_time_reservation;
 
   let parts = date_time_reservation.split(' ');
 
@@ -61,38 +60,32 @@ app.get('/reservering/status', (req, res) => {
   let dateParts = date.split('-');
   let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-  console.log(`Time Reservation: ${time}`);          // Time
-  console.log(`Hour Reservation: ${time_reservation}`);          // Hour
+  console.log(`Time Reservation: ${time}`); // Time
+  console.log(`Hour Reservation: ${time_reservation}`); // Hour
   console.log(`Date Reservation: ${formattedDate}`); // YYYY-MM-DD
 
-  let slot; 
-  if(time_reservation == 14){
-    slot = "slot1"
+  let slot;
+  if (time_reservation == 14) {
+    slot = "slot1";
+  } else if (time_reservation == 15) {
+    slot = "slot2";
+  } else if (time_reservation == 16) {
+    slot = "slot3";
+  } else if (time_reservation == 17) {
+    slot = "slot4";
+  } else if (time_reservation == 18) {
+    slot = "slot5";
+  } else if (time_reservation == 20) {
+    slot = "slot6";
+  } else if (time_reservation == 21) {
+    slot = "slot7";
+  } else if (time_reservation == 22) {
+    slot = "slot8";
+  } else {
+    slot = null; // Assign a default value if none of the conditions match
   }
-  else if(time_reservation == 15){
-    slot = "slot2"
-  }
-  else if(time_reservation == 16){
-    slot = "slot3"
-  }
-  else if(time_reservation == 17){
-    slot = "slot4"
-  }
-  else if(time_reservation == 18){
-    slot = "slot5"
-  }
-  else if(time_reservation == 20){
-    slot = "slot6"
-  }
-  else if(time_reservation == 21){
-    slot = "slot7"
-  }
-  else if(time_reservation == 22){
-    slot = "slot8"
-  }
-  else {}
 
-console.log(`Time slot reservation: ${slot}`)
+  console.log(`Time slot reservation: ${slot}`);
 
   // Define the lane numbers
   const lanes = ["lane1", "lane2", "lane3", "lane4", "lane5", "lane6", "lane7", "lane8"];
@@ -102,7 +95,7 @@ console.log(`Time slot reservation: ${slot}`)
   const checkLaneAvailability = (laneIndex) => {
     if (laneIndex >= lanes.length) {
       // No open lanes found
-      res.sendStatus(404).json('Error. No open slot found');
+      res.status(404).json('Error. No open slot found');
       return;
     }
 
@@ -117,29 +110,26 @@ console.log(`Time slot reservation: ${slot}`)
         // Found an open slot in this lane
         const laneNumber = lane.replace("lane", "");
         console.log(`Lane ${laneNumber} has an open slot at the selected date and time.`);
-        open_lane = "lane"+ laneNumber;
+        open_lane = "lane" + laneNumber;
 
-        var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `slot`, `lane`, `date_reservation`) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        var sqlParams = [ fullname, email, phone, people, slot, open_lane, formattedDate ]
+        var sql = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `slot`, `lane`, `date_reservation`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        var sqlParams = [fullname, email, phone, people, slot, open_lane, formattedDate];
 
         con.query(sql, sqlParams, (err, results) => {
           if (err) throw err;
-          res.sendStatus(200).json( `Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`);
-          return 
-        })
+          res.status(200).json(`Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`);
+          return;
+        });
 
-      }
-
-        else {
+      } else {
         // Slot not available in this lane, check the next one
         checkLaneAvailability(laneIndex + 1);
-        }
+      }
     });
   };
 
   // Start checking the availability from the first lane
   checkLaneAvailability(0);
-
-}); 
+});
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
