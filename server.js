@@ -99,9 +99,9 @@ app.get('/reservering/status', (req, res) => {
   let dateParts = date.split('-');
   let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-  console.log(time);          // Time
-  console.log(time_reservation);          // Hour
-  console.log(formattedDate); // YYYY-MM-DD
+  console.log(`Time Reservation: ${time}`);          // Time
+  console.log(`Hour Reservation: ${time_reservation}`);          // Hour
+  console.log(`Date Reservation: ${formattedDate}`); // YYYY-MM-DD
 
   let slot; 
   if(time_reservation == 14){
@@ -130,47 +130,29 @@ app.get('/reservering/status', (req, res) => {
   }
   else {}
 
-  // Define an array of lane names to check
-  var lanesToCheck = ['lane1', 'lane2', 'lane3', 'lane4', 'lane5', 'lane6', 'lane7', 'lane8']; // Add more lane names as needed
+console.log(`Time slot reservation: ${slot}`)
 
-  // Flag to track if an open slot is found
-  var openSlotFound = false;
+    // Query the current lane
+    var sql = "SELECT ?? FROM ?? WHERE ?? = 'open' AND DATE(date) = ?;";
+    var lane = "lane1"
+    var sqlParams = [slot, lane, slot, formattedDate];
 
-  // Loop through the lanes to check
-  for (var i = 0; i < lanesToCheck.length; i++) {
-  var lane = lanesToCheck[i];
-  
-  // Query the current lane
-  var sqlQuery = "SELECT ?? FROM ?? WHERE ?? = 'open' AND DATE(date) = ?;"
-  var sqlParams = [ slot, lane, slot, formattedDate ]
-  
-  // Execute the query
-  connection.query(sqlQuery, sqlParams, function (error, results, fields) {
-    if (error) {
-      // Handle the error
-      console.error(error);
-    } else {
-      // Check if an open slot is found in the current lane
-      if (results.length > 0 && results[0].slot1 === 'open') {
-        // Open slot found, perform desired operations
-        console.log('Open slot found in ' + lane);
-        openSlotFound = true;
-      } else {
-        // Open slot not found, proceed to the next lane
-        console.log('No open slot found in ' + lane);
-      }
-    }
+    con.query(sql, sqlParams, function (err, result){
+      if (err) throw err;
+      
+      // Assuming the query results are stored in the variable 'results'
+     const slotStatus = result[0].slot1;
+     console.log('Slot status:', slotStatus);
 
-    // Check if an open slot is found or if all lanes have been checked
-    if (openSlotFound || i === lanesToCheck.length - 1) {
-      if (!openSlotFound) {
-        console.log('No open slot found in any lane.');
-      }
-      // Perform any further actions based on the result
-      // ...
-    }
-  });
-  }
+
+
+
+
+
+    });
+
+   
+
   // Define the SQL params
  var sqlParams1 = [ fullname, email, phone, people, slot, date_time_reservation, date_added ]
  var sql1 = "INSERT INTO `reservations`(`fullname`, `email`, `phone`, `people`, `date_time_reservation`, `date_added`) VALUES ('?','?','?','?','?')"
