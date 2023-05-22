@@ -163,4 +163,37 @@
       }
     });
   </script>
+  <script>
+    const url = 'localhost:8383/reservering/aanmaken';  // Replace with the actual endpoint URL
+
+const data = new URLSearchParams();
+data.append('fullname', 'John Doe');
+data.append('email', 'johndoe@example.com');
+data.append('phone', '1234567890');
+data.append('date_time_reservation', '2023-05-22 10:00');
+data.append('people', 2);
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: data
+})
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Error: ' + response.status);
+    }
+  })
+  .then(responseData => {
+    console.log('Reservation created:', responseData);
+    // Handle the response data as needed
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle the error appropriately
+  }); 
+  </script>
 </html>
