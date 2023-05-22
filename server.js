@@ -102,6 +102,7 @@ console.log(`Time slot reservation: ${slot}`)
   const checkLaneAvailability = (laneIndex) => {
     if (laneIndex >= lanes.length) {
       // No open lanes found
+      res.sendStatus(404).json('Error. No open slot found');
       return;
     }
 
@@ -123,9 +124,10 @@ console.log(`Time slot reservation: ${slot}`)
 
         con.query(sql, sqlParams, (err, results) => {
           if (err) throw err;
+          res.sendStatus(200).json( `Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`);
+          return 
         })
 
-        res.sendStatus(200).json( `Gelukt! De reservering staat om: ${time}. op ${formattedDate}.`)
       }
 
         else {
