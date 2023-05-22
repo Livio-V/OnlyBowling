@@ -122,7 +122,14 @@ app.post('/reservering/aanmaken', function(req, res) {
 
   // Start checking the availability from the first lane
   checkLaneAvailability(0);
+
+
+  // This endpoint takes in the post data. Check which lanes are available and assigns the customer a lane. 
+  // if there are no available lanes for the selected time and date. The endpoint returns a 404. 
+  // The frontend can then play into this and let the customer know that everything is full for the selected date and time.
+
 });
+
 
 
 app.listen(port, () => console.log(`Server started on port: ${port}`))
