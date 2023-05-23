@@ -160,6 +160,19 @@ app.post('/reservering/verwijderen', function(req, res) {
       res.status(404).json('Error. No reservation found with the provided ID');
       return
     }
+
+
+    var sql2 = "UPDATE ?? SET ?? = '' WHERE ?? = ?;"
+    var sqlParams2 = [ lane, slot, slot, name ]
+
+    con.query(sql2, sqlParams2, (err, result) => {
+      if (err) throw err;
+
+      if (result.affectedRows > 0) {
+        console.log(`Deleted name from table ${}`)
+      }
+    })
+
   });
 
 
@@ -181,10 +194,7 @@ app.post('/reservering/verwijderen', function(req, res) {
   });
 
 
-  var sql2 = "UPDATE ?? SET ?? = '' WHERE ?? = ?;"
-  var sqlParams2 = [ lane, slot  ]
-
-  con.query(sql2, sqlParams2)
+  
 
 
   
