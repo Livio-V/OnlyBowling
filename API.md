@@ -13,3 +13,21 @@ Endpoints listed below.
 - Response: JSON
 - URL: '/reservering/aanmaken
 - Method: POST
+
+# See all reservations
+- Response: JSON
+- URL: '/reservering/status'
+- Method: GET
+
+# Edit reservations*
+- Response: JSON
+- URL: '/reservering/bewerken'
+- Method: POST
+
+# Delete reservations*
+- Response: JSON
+- URL: '/reservering/verwijderen'
+- Method: POST
+
+
+> * = not implemented yet
