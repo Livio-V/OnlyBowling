@@ -33,6 +33,7 @@ app.get('/reservering/status', (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err
     res.status(200).json(result)
+    console.log("sending results..")
   });
 
 });
@@ -129,6 +130,65 @@ app.post('/reservering/aanmaken', function(req, res) {
   // The frontend can then play into this and let the customer know that everything is full for the selected date and time.
 
 });
+
+app.post('/reservering/verwijderen', function(req, res) {
+  // Using bodyparser get the ID from body
+  
+  var data = req.body
+  var id = data.id;
+
+  let slot;
+  let lane;
+  let name;
+
+  // Get information about the reservation
+  var sql = "SELECT * FROM `reservations` WHERE id = ?;"
+  var sqlParams = [ id ]
+
+  con.query(sql, sqlParams, (err, result) => {
+    if (err) throw err;
+  
+    if (result.length > 0) {
+      const row = result[0];
+  
+      let slot = row.slot;
+      let lane = "lane"+ row.lane
+      let name = row.fullname
+
+    } else {
+      // Send error if no reservations is found with provided ID
+      res.status(404).json('Error. No reservation found with the provided ID');
+      return
+    }
+  });
+
+
+  // Delete the reservation from the table reservations
+  var sql1 = "DELETE FROM `reservations` WHERE `id` = ?;"
+  var sqlParams1 = [ id ]
+
+  con.query(sql1, sqlParams1, (err, result) => {
+    if (err) throw err;
+
+    if (result.affectedRows > 0) {
+      console.log('Deleted reservation from table "reservations" ')
+    }
+
+    else{
+      console.error('Error. No affected rows, something went wrong.')
+    }
+
+  });
+
+
+  var sql2 = "UPDATE ?? SET ?? = '' WHERE ?? = ?;"
+  var sqlParams2 = [ lane, slot  ]
+
+  con.query(sql2, sqlParams2)
+
+
+  
+})
 
 
 
