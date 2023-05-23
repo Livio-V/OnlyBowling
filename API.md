@@ -30,4 +30,4 @@ Endpoints listed below.
 - Method: POST
 
 
-> * = not implemented yet
+> *not implemented yet
