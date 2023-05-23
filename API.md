@@ -9,22 +9,22 @@ Endpoints listed below.
 - Delete reservation
 
 
-# Create reservation
+## Create reservation
 - Response: JSON
 - URL: '/reservering/aanmaken
 - Method: POST
 
-# See all reservations
+## See all reservations
 - Response: JSON
 - URL: '/reservering/status'
 - Method: GET
 
-# Edit reservations*
+## Edit reservations*
 - Response: JSON
 - URL: '/reservering/bewerken'
 - Method: POST
 
-# Delete reservations*
+## Delete reservations*
 - Response: JSON
 - URL: '/reservering/verwijderen'
 - Method: POST
